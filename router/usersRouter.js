@@ -10,17 +10,24 @@ const {
   addUserValidators,
   addUserValidationHandler,
 } = require("../middlewares/users/userValidators");
-const { checkLogin } = require("../middlewares/common/checkLogin");
+const { checkLogin, requireRole } = require("../middlewares/common/checkLogin");
 
 const router = express.Router();
 
 // users page
-router.get("/", decorateHtmlResponse("Users"), checkLogin, getUsers);
+router.get(
+  "/",
+  decorateHtmlResponse("Users"),
+  checkLogin,
+  requireRole(["admin"]),
+  getUsers
+);
 
 // add user
 router.post(
     "/",
-    // checkLogin,
+    checkLogin,
+    requireRole(["admin"]),
     avatarUpload,
     addUserValidators,
     addUserValidationHandler,
@@ -28,6 +35,6 @@ router.post(
   );
   
   // remove user
-  router.delete("/:id", removeUser);
+  router.delete("/:id", checkLogin, requireRole(["admin"]), removeUser);
 
 module.exports = router;

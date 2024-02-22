@@ -30,9 +30,14 @@ global.io = io;
 app.locals.moment = moment;
 
 // database connection
-mongoose.connect(process.env.MONGO_CONNECTION_STRING)
-  .then(() => console.log("database connection successful!"))
-  .catch((err) => console.log(err));
+// mongoose.connect(process.env.MONGO_CONNECTION_STRING)
+//   .then(() => console.log("database connection successful!"))
+//   .catch((err) => console.log(err));
+
+mongoose
+     .connect("mongodb+srv://abdulbarik22385m:WlrqE7jjMOXmzXoB@cluster0.wkzepo3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster")
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 
 // request parsers
 app.use(express.json());
@@ -58,6 +63,8 @@ app.use(notFoundHandler);
 // common error handler
 app.use(errorHandler);
 
-server.listen(process.env.PORT, () => {
-  console.log(`app listening to port https://localhost:${process.env.PORT}`);
-});
+// server.listen(process.env.PORT, () => {
+//   console.log(`app listening to port https://localhost:${process.env.PORT}`);
+// });
+
+server.listen(3003)
